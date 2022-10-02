@@ -13,9 +13,7 @@ ui <- fluidPage(theme = shinytheme("cerulean"),
                     h1("Selected Text"),
                     #h4("The keywords matched and the weightage associated is: "),
                     #textInput("string_data","Enter the string: "),
-                    #string_data <- ("This is a sample sentence"),
-                    string_data <-read.delim("testing.txt"),
-                    h3(textOutput(string_data))
+                    textOutput("string_data")
                   )
                 ),
                 sidebarLayout(
@@ -45,7 +43,7 @@ ui <- fluidPage(theme = shinytheme("cerulean"),
                   mainPanel()
                   
                 )
-                
+    
           
 )
 
@@ -67,7 +65,15 @@ server <- function(input, output) {
     
     return(marks)
   }
-  #output$string_data <- read.delim("input_txt.txt")
+  reading_data <-read.table("testing.txt",              # TXT data file indicated as string or full path to the file
+                            header = FALSE,    # Whether to display the header (TRUE) or not (FALSE)
+                            sep = "",          # Separator of the columns of the file
+                            dec = ".")         # Character used to separate decimals of the numbers in the file
+  output$string_data <- renderText({
+    paste(reading_data) #functions 
+  })
+
+    
 } # server
 
 
