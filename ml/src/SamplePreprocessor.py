@@ -6,6 +6,33 @@ import random
 import cv2
 import numpy as np
 
+#ricker wavelet
+def rickerWavelet(x, sigma):
+    return (1 - (x ** 2) / (sigma ** 2)) * np.exp(-(x ** 2) / (2 * (sigma ** 2)))
+
+def rickerFilter(size, sigma):
+    # make sure size is odd
+    size = size if size % 2 == 1 else size + 1
+
+    # create ricker filter
+    x = np.arange(0, size) - (size - 1) / 2
+    filter = rickerWavelet(x, sigma)
+
+    # normalize filter
+    filter /= np.sum(filter)
+
+    return filter
+
+def applyRickerFilter(img, size, sigma):
+    # create filter
+    filter = rickerFilter(size, sigma)
+
+    # apply filter to image
+    imgFiltered = cv2.filter2D(img, -1, filter)
+
+    return imgFiltered
+
+
 
 def preprocess(img, imgSize, dataAugmentation=False):
     "put img into target img of size imgSize, transpose for TF and normalize gray-values"
@@ -39,32 +66,6 @@ def preprocess(img, imgSize, dataAugmentation=False):
     # transpose for TF
     img = cv2.transpose(target)
 
-    #ricker wavelet
-    def rickerWavelet(x, sigma):
-        return (1 - (x ** 2) / (sigma ** 2)) * np.exp(-(x ** 2) / (2 * (sigma ** 2)))
-
-    def rickerFilter(size, sigma):
-        # make sure size is odd
-        size = size if size % 2 == 1 else size + 1
-
-        # create ricker filter
-        x = np.arange(0, size) - (size - 1) / 2
-        filter = rickerWavelet(x, sigma)
-
-        # normalize filter
-        filter /= np.sum(filter)
-
-        return filter
-    
-    def applyRickerFilter(img, size, sigma):
-        # create filter
-        filter = rickerFilter(size, sigma)
-
-        # apply filter to image
-        imgFiltered = cv2.filter2D(img, -1, filter)
-
-        return imgFiltered
-    
     img = applyRickerFilter(img, 5, 1)
 
     # normalize
