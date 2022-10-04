@@ -64,7 +64,7 @@ def preprocess(img, imgSize, dataAugmentation=False):
         imgFiltered = cv2.filter2D(img, -1, filter)
 
         return imgFiltered
-
+    
     img = applyRickerFilter(img, 5, 1)
 
     # normalize
