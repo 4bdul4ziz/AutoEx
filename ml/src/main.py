@@ -2,6 +2,7 @@ from __future__ import division
 from __future__ import print_function
 
 import argparse
+import re
 
 import cv2
 import editdistance
@@ -17,7 +18,7 @@ class FilePaths:
     fnAccuracy = '/Users/abdul/Desktop/Programming/R Programs/AutoEx/ml/model/accuracy.txt'
     fnTrain = '/Users/abdul/Desktop/Programming/R Programs/AutoEx/ml/data/'
     # fnInfer = '../data/test.png'
-    fnInfer = '/Users/abdul/Desktop/Programming/R Programs/AutoEx/ml/data/words/a02/a02-000/a02-000-00-00.png'
+    fnInfer = '/Users/abdul/Desktop/Programming/R Programs/AutoEx/ml/data/analyze.png'
 
     fnCorpus = '/Users/abdul/Desktop/Programming/R Programs/AutoEx/ml/data/corpus.txt'
     
@@ -57,9 +58,6 @@ def train(model, loader):
         else:
             print('Character error rate not improved')
             noImprovementSince += 1
-
-        
-        
 
         # stop training if no more improvement in the last x epochs
         if noImprovementSince >= earlyStopping:
@@ -105,7 +103,6 @@ def infer(model, fnImg):
     (recognized, probability) = model.inferBatch(batch, True)
     print('Recognized:', '"' + recognized[0] + '"')
     print('Probability:', probability[0])
-
 
 def main():
     "main function"
