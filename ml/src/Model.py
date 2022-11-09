@@ -4,11 +4,19 @@ from __future__ import print_function
 import numpy as np
 import os
 import sys
+import warnings
 from sklearn.linear_model import TheilSenRegressor
 import tensorflow as tf
 
-# Disable eager mode
+#py configs
+warnings.filterwarnings("ignore")
+
+
+#tf configuarations
 tf.compat.v1.disable_eager_execution()
+tf.config.experimental.enable_mlir_graph_optimization()
+
+
 class DecoderType:
     BestPath = 0
     BeamSearch = 1
@@ -78,7 +86,7 @@ class Model:
         self.cnnOut4d = pool
 
     def setupRNN(self):
-        "create RNN layers and return output of these layers"
+        "create RNN layers and return output of these layers"                                          
         rnnIn3d = tf.squeeze(self.cnnOut4d, axis=[2])
 
         # basic cells which is used to build RNN
@@ -146,7 +154,7 @@ class Model:
         "initialize TF"
         print('Python: ' + sys.version)
         print('Tensorflow: ' + tf.__version__)
-
+                             
         sess = tf.compat.v1.Session()  # TF session
 
         saver = tf.compat.v1.train.Saver(max_to_keep=1)  # saver saves model to file
@@ -176,7 +184,7 @@ class Model:
         # go over all texts
         for (batchElement, text) in enumerate(texts):
             # convert to string of label (i.e. class-ids)
-            labelStr = [self.charList.index(c) for c in text]
+            labelStr = [self.charList.index(c) for c in text]   
             # sparse tensor must have size of max. label-string
             if len(labelStr) > shape[1]:
                 shape[1] = len(labelStr)
@@ -193,7 +201,7 @@ class Model:
         # contains string of labels for each batch element
         encodedLabelStrs = [[] for i in range(batchSize)]
 
-        # word beam search: label strings terminated by blank
+        # word beam search: label strings terminated by blank                                                                                
         if self.decoderType == DecoderType.WordBeamSearch:
             blank = len(self.charList)
             for b in range(batchSize):
@@ -272,7 +280,6 @@ class Model:
                         self.seqLen: [Model.maxTextLen] * numBatchElements, self.is_train: False}
             lossVals = self.sess.run(evalList, feedDict)
             probs = np.exp(-lossVals)
-
         # dump the output of the NN to CSV file(s)
         if self.dump:
             self.dumpNNOutput(evalRes[1])
