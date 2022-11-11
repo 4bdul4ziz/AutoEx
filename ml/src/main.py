@@ -10,12 +10,16 @@ import editdistance
 from DataLoader import DataLoader, Batch
 from Model import Model, DecoderType
 from SamplePreprocessor import preprocess
+#from imageFeed import getImages
+from warnings import filterwarnings
+filterwarnings('ignore')
 
-
+import tensorflow as tf
+tf.get_logger().setLevel('ERROR')
 class FilePaths:
     "filenames and paths to data"
-    fnCharList = '/Users/abdul/Desktop/Programming/R Programs/AutoEx/ml/model/charList.txt'
-    fnAccuracy = '/Users/abdul/Desktop/Programming/R Programs/AutoEx/ml/model/accuracy.txt'
+    fnCharList = '/Users/abdul/Desktop/Programming/R Programs/AutoEx/ml/data/charList.txt'
+    fnAccuracy = '/Users/abdul/Desktop/Programming/R Programs/AutoEx/ml/data/accuracy.txt'
     fnTrain = '/Users/abdul/Desktop/Programming/R Programs/AutoEx/ml/data/'
     # fnInfer = '../data/test.png'
     fnInfer = '/Users/abdul/Desktop/Programming/R Programs/AutoEx/ml/data/analyze.png'
@@ -29,7 +33,7 @@ def train(model, loader):
     epoch = 0  # number of training epochs since start
     bestCharErrorRate = float('inf')  # best valdiation character error rate
     noImprovementSince = 0  # number of epochs no improvement of character error rate occured
-    earlyStopping = 30  # stop training after this number of epochs without improvement
+    earlyStopping = 100  # stop training after this number of epochs without improvement
     while True:
         epoch += 1
         print('Epoch:', epoch)
@@ -104,6 +108,12 @@ def infer(model, fnImg):
     print('Recognized:', '"' + recognized[0] + '"')
     print('Probability:', probability[0])
 
+#function to store the recognised word onto a txt file
+def storeText(recognized):
+    f = open("data/recognized.txt", "w")
+    f.write(recognized)
+    f.close()
+
 def main():
     "main function"
     # optional command line args
@@ -114,6 +124,7 @@ def main():
     parser.add_argument('--wordbeamsearch', help='use word beam search instead of best path decoding',
                         action='store_true')
     parser.add_argument('--dump', help='dump output of NN to CSV file(s)', action='store_true')
+    parser.add_argument('--image', help='image to recognize text from')
 
     args = parser.parse_args()
 
@@ -151,3 +162,4 @@ def main():
 
 if __name__ == '__main__':
     main()
+
