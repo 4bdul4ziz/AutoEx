@@ -20,7 +20,7 @@ tf.config.experimental.enable_mlir_graph_optimization()
 class DecoderType:
     BestPath = 0
     BeamSearch = 1
-    WordBeamSearch = 2
+    WordBeamSearch = 2 
 
 
 class Model:
@@ -229,8 +229,8 @@ class Model:
         "feed a batch into the NN to train it"
         numBatchElements = len(batch.imgs)
         sparse = self.toSparse(batch.gtTexts)
-        rate = 0.01 if self.batchesTrained < 10 else (
-            0.001 if self.batchesTrained < 10000 else 0.0001)  # decay learning rate
+        rate = 0.001 if self.batchesTrained < 10 else (
+            0.0001 if self.batchesTrained < 10000 else 0.0001)  # decay learning rate
         evalList = [self.optimizer, self.loss]
         feedDict = {self.inputImgs: batch.imgs, self.gtTexts: sparse,
                     self.seqLen: [Model.maxTextLen] * numBatchElements, self.learningRate: rate, self.is_train: True}
@@ -290,4 +290,3 @@ class Model:
         "save model to file"
         self.snapID += 1
         self.saver.save(self.sess, '../model/snapshot', global_step=self.snapID)
-
