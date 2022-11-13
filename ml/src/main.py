@@ -3,7 +3,7 @@ from __future__ import print_function
 
 import argparse
 import re
-
+import os
 import cv2
 import editdistance
 
@@ -23,7 +23,7 @@ class FilePaths:
     fnTrain = '/Users/abdul/Desktop/Programming/R Programs/AutoEx/ml/data/'
     # fnInfer = '../data/test.png'
     fnInfer = '/Users/abdul/Desktop/Programming/R Programs/AutoEx/ml/data/analyze.png'
-
+    fnSegment = '/Users/abdul/Desktop/Programming/R Programs/AutoEx/ml/data/segments/'
     fnCorpus = '/Users/abdul/Desktop/Programming/R Programs/AutoEx/ml/data/corpus.txt'
     
 
@@ -105,14 +105,23 @@ def infer(model, fnImg):
     img = preprocess(cv2.imread(fnImg, cv2.IMREAD_GRAYSCALE), Model.imgSize)
     batch = Batch(None, [img])
     (recognized, probability) = model.inferBatch(batch, True)
-    print('Recognized:', '"' + recognized[0] + '"')
-    print('Probability:', probability[0])
+    """ print('Recognized:', '"' + recognized[0] + '"')
+    print('Probability:', probability[0]) """
+    return recognized[0]
 
 #function to store the recognised word onto a txt file
 def storeText(recognized):
-    f = open("data/recognized.txt", "w")
-    f.write(recognized)
+    f = open("/Users/abdul/Desktop/Programming/R Programs/AutoEx/ml/data/recognized.txt", "a")
+    #add a , to the end of the word
+    #if the word is the last word, then dont add the ,
+    for i in range(len(recognized)):
+        if i == len(recognized)-1:
+            f.write(recognized[i])
+            f.write("\n")
+        else:
+            f.write(recognized + ",")
     f.close()
+    #f.write("\n")
 
 def main():
     "main function"
@@ -124,7 +133,9 @@ def main():
     parser.add_argument('--wordbeamsearch', help='use word beam search instead of best path decoding',
                         action='store_true')
     parser.add_argument('--dump', help='dump output of NN to CSV file(s)', action='store_true')
-    parser.add_argument('--image', help='image to recognize text from')
+    
+    parser.add_argument('--image', help='image to recognize text from', action='store_true' )
+    
 
     args = parser.parse_args()
 
@@ -152,6 +163,28 @@ def main():
         elif args.validate:
             model = Model(loader.charList, decoderType, mustRestore=True)
             validate(model, loader)
+
+    # infer text from /data/segments folder
+    elif args.image:        
+        fnCharList = FilePaths.fnCharList
+        #fnAccuracy = FilePaths.fnAccuracy
+        fnInfer = FilePaths.fnInfer
+        fnCorpus = FilePaths.fnCorpus
+        fnSegment = FilePaths.fnSegment
+        model = Model(open(fnCharList).read(), decoderType, mustRestore=True, dump=args.dump)
+        images = []
+        for file in os.listdir(fnSegment):
+            if file.endswith(".png"):
+                images.append(file)
+
+        for image in images:
+            fnImg = os.path.join(fnSegment, image)
+            print(fnImg)
+            # load trained model
+            recognized = infer(model, fnImg)
+            storeText(recognized)
+            print('Recognized:', '"' + recognized + '"')
+            print('----------------------------------------')
 
     # infer text on test image
     else:
