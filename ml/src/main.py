@@ -6,15 +6,15 @@ import re
 import os
 import cv2
 import editdistance
-
+import tensorflow as tf
 from DataLoader import DataLoader, Batch
 from Model import Model, DecoderType
 from SamplePreprocessor import preprocess
-#from imageFeed import getImages
+from vision import *
+
 from warnings import filterwarnings
 filterwarnings('ignore')
 
-import tensorflow as tf
 tf.get_logger().setLevel('ERROR')
 class FilePaths:
     "filenames and paths to data"
@@ -25,7 +25,6 @@ class FilePaths:
     fnInfer = '/Users/abdul/Desktop/Programming/R Programs/AutoEx/ml/data/analyze.png'
     fnSegment = '/Users/abdul/Desktop/Programming/R Programs/AutoEx/ml/data/segments/'
     fnCorpus = '/Users/abdul/Desktop/Programming/R Programs/AutoEx/ml/data/corpus.txt'
-    
 
 
 def train(model, loader):
@@ -112,16 +111,19 @@ def infer(model, fnImg):
 #function to store the recognised word onto a txt file
 def storeText(recognized):
     f = open("/Users/abdul/Desktop/Programming/R Programs/AutoEx/ml/data/recognized.txt", "a")
-    #add a , to the end of the word
-    #if the word is the last word, then dont add the ,
-    for i in range(len(recognized)):
-        if i == len(recognized)-1:
-            f.write(recognized[i])
-            f.write("\n")
-        else:
-            f.write(recognized + ",")
+    f.write(recognized)
+    f.write("\n")
     f.close()
-    #f.write("\n")
+
+def storeVisionText(recognized):
+    with open("/Users/abdul/Desktop/Programming/R Programs/AutoEx/ml/data/recognized.txt", "a") as f:
+        for item in recognized:
+            f.write("%s\n" % item)
+
+            
+
+
+        
 
 def main():
     "main function"
@@ -135,7 +137,7 @@ def main():
     parser.add_argument('--dump', help='dump output of NN to CSV file(s)', action='store_true')
     
     parser.add_argument('--image', help='image to recognize text from', action='store_true' )
-    
+    parser.add_argument('--vision', help='recognizes text from images', action='store_true' )
 
     args = parser.parse_args()
 
@@ -186,6 +188,23 @@ def main():
             print('Recognized:', '"' + recognized + '"')
             print('----------------------------------------')
 
+    elif args.vision:
+        fnCharList = FilePaths.fnCharList
+        #fnAccuracy = FilePaths.fnAccuracy
+        fnInfer = FilePaths.fnInfer
+        fnCorpus = FilePaths.fnCorpus
+        fnSegment = FilePaths.fnSegment
+        model = Model(open(fnCharList).read(), decoderType, mustRestore=True, dump=args.dump)
+        images = []
+        for file in os.listdir(fnSegment):
+            if file.endswith(".png"):
+                images.append(file)
+
+        for image in images:
+            fnImg = os.path.join(fnSegment, image)
+            print(fnImg)
+            recognized = image_to_text(fnImg)
+            storeVisionText(recognized)
     # infer text on test image
     else:
         print(open(FilePaths.fnAccuracy).read())
