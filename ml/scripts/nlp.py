@@ -1,6 +1,16 @@
-import jamspell
+from textblob import TextBlob
+ 
+#open recognized text file
+with open("/Users/abdul/Desktop/Programming/R Programs/AutoEx/ml/data/recognized.txt", "r") as f:
+    text = f.read()
 
-def correct_text(text):
-    corrector = jamspell.TSpellCorrector()
-    corrector.LoadLangModel('en.bin')
-    return corrector.FixFragment(text)
+#convert text to blob
+blob = TextBlob(text)
+
+#correct spelling
+corrected = blob.correct()
+
+# write corrected text to a file
+with open("/Users/abdul/Desktop/Programming/R Programs/AutoEx/ml/data/corrected.txt", "w") as f:
+    f.write(str(corrected))
+f.close()
