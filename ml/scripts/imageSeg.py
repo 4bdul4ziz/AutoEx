@@ -4,7 +4,7 @@ import numpy as np
 
 #read the image
 #HMM YES INTERESTING IMAGE
-image = cv2.imread('ml/data/yourmom.png')
+image = cv2.imread('/Users/abdul/Desktop/Programming/R Programs/AutoEx/ml/data/written/IMG_6024.jpg')
 #convert to grayscale
 gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
 #binary
@@ -30,7 +30,7 @@ for i, ctr in enumerate(sorted_ctrs):
     #rectangle cause cool
     cv2.waitKey(0)
     #save each word as a separate image
-    cv2.imwrite('ml/data/segments/word'+str(i)+'.png', roi)
+    cv2.imwrite('/Users/abdul/Desktop/Programming/R Programs/AutoEx/ml/data/segments/word'+str(i)+'.png', roi)
 
 cv2.imshow('marked areas',image)
 cv2.waitKey(0)
