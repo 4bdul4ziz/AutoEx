@@ -1,7 +1,9 @@
 ml/data/lines
 ml/data/words
+/ml/data/segments
+/ml/data/written
 ml/data/lines.tar
 ml/data/lines.tgz
-
+.DS_Store
 
 /Users/abdul/Desktop/Programming/R Programs/AutoEx/ml/src/__pycache__
