@@ -11,7 +11,8 @@ from DataLoader import DataLoader, Batch
 from Model import Model, DecoderType
 from SamplePreprocessor import preprocess
 from vision import *
-
+from nlp import *
+from imageSeg import *
 from warnings import filterwarnings
 filterwarnings('ignore')
 
@@ -25,7 +26,7 @@ class FilePaths:
     fnInfer = '/Users/abdul/Desktop/Programming/R Programs/AutoEx/ml/data/analyze.png'
     fnSegment = '/Users/abdul/Desktop/Programming/R Programs/AutoEx/ml/data/segments/'
     fnCorpus = '/Users/abdul/Desktop/Programming/R Programs/AutoEx/ml/data/corpus.txt'
-
+    fnWritten = '/Users/abdul/Desktop/Programming/R Programs/AutoEx/ml/data/written/'
 
 def train(model, loader):
     "train NN"
@@ -120,7 +121,7 @@ def storeVisionText(recognized):
         for item in recognized:
             f.write("%s\n" % item)
 
-            
+
 
 
         
@@ -191,25 +192,37 @@ def main():
     elif args.vision:
         fnCharList = FilePaths.fnCharList
         #fnAccuracy = FilePaths.fnAccuracy
-        fnInfer = FilePaths.fnInfer
-        fnCorpus = FilePaths.fnCorpus
         fnSegment = FilePaths.fnSegment
-        model = Model(open(fnCharList).read(), decoderType, mustRestore=True, dump=args.dump)
+        fnWritten = FilePaths.fnWritten
         images = []
-        for file in os.listdir(fnSegment):
-            if file.endswith(".png"):
+        for file in os.listdir(fnWritten):
+            if file.endswith(".jpg"):
                 images.append(file)
 
         for image in images:
-            fnImg = os.path.join(fnSegment, image)
+            fnImg = os.path.join(fnWritten, image)
             print(fnImg)
             recognized = image_to_text(fnImg)
             storeVisionText(recognized)
+            spellChecker()
     # infer text on test image
     else:
-        print(open(FilePaths.fnAccuracy).read())
-        model = Model(open(FilePaths.fnCharList).read(), decoderType, mustRestore=True, dump=args.dump)
-        infer(model, FilePaths.fnInfer)
+        fnCharList = FilePaths.fnCharList
+        #fnAccuracy = FilePaths.fnAccuracy
+        fnSegment = FilePaths.fnSegment
+        fnWritten = FilePaths.fnWritten
+        images = []
+        for file in os.listdir(fnWritten):
+            if file.endswith(".jpg"):
+                images.append(file)
+
+        for image in images:
+            fnImg = os.path.join(fnWritten, image)
+            imageSeg(fnImg)
+            print(fnImg)
+            recognized = image_to_text(fnImg)
+            storeVisionText(recognized)
+            spellChecker()
 
 
 if __name__ == '__main__':
