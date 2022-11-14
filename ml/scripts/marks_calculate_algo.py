@@ -23,13 +23,12 @@ for i in range(0,len(NLP_array)):
 
 def normal_weightage(NLP_array):
     keyword_weightage = 0
-    n=int(input('Enter the number of keywords: '))
+    #n=int(input('Enter the number of keywords: '))
     keyword_normal_matches =[]
     matches_found =[]
-    for i in range(0,n):
+    """for i in range(0,n):
         keyword = input('Enter the keyword: ')
-        keyword_normal_matches.append(keyword)
-
+        keyword_normal_matches.append(keyword)"""
     matches_array = np.asarray(keyword_normal_matches)
 
 
