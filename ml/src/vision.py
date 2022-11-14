@@ -44,16 +44,12 @@ def storeText(recognized):
             f.write("%s\n" % item)
     f.close()
 
-
-
 def main():
 
-    img_path = '/Users/abdul/Desktop/Programming/R Programs/AutoEx/ml/data/written/test.JPG'
+    img_path = '/Users/abdul/Desktop/Programming/R Programs/AutoEx/ml/data/written/IMG_6030.jpg'
     results = image_to_text(img_path)
     print(results)
     #store the recognised text in a txt file
+    storeText(results)
 
-
-
-
-main()
+#main()
