@@ -18,11 +18,11 @@ from SamplePreprocessor import preprocess
 # constants like filepaths
 class Constants:
     "filenames and paths to data"
-    fnCharList = '../model/charList.txt'
-    fnAnalyze = '../data/analyze.png'
-    fnPixelRelevance = '../data/pixelRelevance.npy'
-    fnTranslationInvariance = '../data/translationInvariance.npy'
-    fnTranslationInvarianceTexts = '../data/translationInvarianceTexts.pickle'
+    fnCharList = '/Users/abdul/Desktop/Programming/R Programs/AutoEx/ml/data/charList.txt'
+    fnAnalyze = '/Users/abdul/Desktop/Programming/R Programs/AutoEx/ml/data/analyze.png'
+    fnPixelRelevance = '/Users/abdul/Desktop/Programming/R Programs/AutoEx/ml/data/pixelRelevance.npy'
+    fnTranslationInvariance = '/Users/abdul/Desktop/Programming/R Programs/AutoEx/ml/data/translationInvariance.npy'
+    fnTranslationInvarianceTexts = '/Users/abdul/Desktop/Programming/R Programs/AutoEx/ml/data/translationInvarianceTexts.pickle'
     gtText = 'are'
     distribution = 'histogram'  # 'histogram' or 'uniform'
 
