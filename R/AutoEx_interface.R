@@ -9,14 +9,25 @@
 
 library(shiny)
 library(shinythemes)
-source_python("/Users/samik/Desktop/Programming/AutoEx/test.py")
+library(reticulate)
+#import python modules
+source_python("/Users/abdul/Desktop/Programming/R Programs/AutoEx/ml/src/main.py")
+source_python("/Users/abdul/Desktop/Programming/R Programs/AutoEx/ml/scripts/marks_calculate_algo.py")
 
-ui <- fluidPage(theme = shinytheme("cerulean"),
+ui <- fluidPage(theme = shinytheme("slate"),
                 titlePanel("Auto EX"),
                 sidebarLayout(position = "left",
                   sidebarPanel(
-                    tags$h3("Keyword  Input:"),
-                    textInput("keyword_input", "Enter the keywords:", "")
+                    tags$h3("Normal Weightage "),
+                    textInput("keyword_input", "Enter the keywords:", ""),
+                    actionButton("normal_button","Normal weightage calculate"),
+                    textOutput("button_works"),
+                    tags$h3("Custom Weightage "),
+                    textInput("keyword_input", "Enter the keywords:", ""),
+                    textInput("weightage_input","enter the weightage associated with the custom keywords: "),
+                    actionButton("custom_button","Custom weightage calculate"),
+                    textOutput("button_works_custom")
+                    
                   ),
                   
                   mainPanel(
@@ -25,14 +36,17 @@ ui <- fluidPage(theme = shinytheme("cerulean"),
                     #textInput("string_data","Enter the string: "),
                     textOutput("string_data"),
                     h3("The examiner entered keywords list: "),
-                    textOutput("examiner_list"),
+                    textOutput("examiner_list")
+                    #uiOutput(outputId = "my_ui")
+                    
                     
                   )
                 ),
                 sidebarLayout(
                   sidebarPanel(
-                    tags$b("Keyword Count"),
-                    textOutput("keyword_output")
+                    tags$b("Model Execution"),
+                    actionButton("model_run","Execute Model"),
+                    textOutput("model_output")
                   ),
                   mainPanel()
                 ),
@@ -45,10 +59,10 @@ ui <- fluidPage(theme = shinytheme("cerulean"),
                 ),
                 sidebarLayout(
                   sidebarPanel(
-                    fileInput("input_txt", "Choose the txt file",
+                    fileInput("image_dummy", "Select the scanned image file",
                               multiple = FALSE,
-                              accept = c("text/plain",
-                                         ".txt", "space")),
+                              accept = c('image/png',
+                                         ".jpg")),
                     
                     # Horizontal line ----
                     tags$hr()
@@ -66,40 +80,62 @@ ui <- fluidPage(theme = shinytheme("cerulean"),
           
 )
 
+
+
+
+
 server <- function(input, output) {
   
-  output$keyword_output <- renderText({
-    paste( keywords ) #functions 
-  })
-  output$marks_output <- renderText({
-    marks <-function1()
-    paste( marks ) #functions 
-  })
-  #functions using algorithm that will award the marks based on examiners choice 
-  #under development
-  keyword_count <- function(string_data) {
+  observeEvent(input$normal_button, {
+    marks <- normal_weightage(NLP_array) #here instead of function1 we will we calling normal_weightage 
+    output$button_works <-renderText({
+      paste( marks )  #saves the weightage [o/p of the function and renders as text and prints on interface]
+    })
     
-  return(keywords)
-  }
+  })
   
-  calculate_marks <-function(keywords){
+  observeEvent(input$custom_button, {
+    marks2 <- custom_weightage(NLP_array) #here instead of function1 we will we calling custom_weightage 
+    output$button_works_custom <-renderText({
+      paste( marks2 )  #saves the weightage [o/p of the function and renders as text and prints on interface]
+    })
     
-    return(marks)
-  }
+  })
+  
+  observeEvent(input$model_run, {
+    model_works<- main() #calling the main.py for model
+    output$model_output <-renderText({
+      paste( model_works )  #add a print statement in the main function that "model ran successfully"
+    })
+    
+  })
+  
+  observeEvent(input$image_dummy, {
+      inFile <- input$image_dummy
+      if (is.null(inFile))
+        return()
+      img<-file.copy(inFile$datapath, file.path("/Users/abdul/Desktop/Programming/R Programs/AutoEx/ml/data/written/", inFile$name) ) #here is the directory you want the scanned image in
+  })
   
   
-
+  #checking the image by printing onto the interface
+ 
+  
+  output$my_ui<-renderUI({
+      img(src=img,height = '300px')
+  })
   
   
-  reading_data <-read.table("input_txt.txt",              # TXT data file indicated as string or full path to the file
+  
+  reading_data <-read.delim("/Users/abdul/Desktop/Programming/R Programs/AutoEx/ml/data/corrected.txt",              # TXT data file indicated as string or full path to the file
                             header = FALSE,    # Whether to display the header (TRUE) or not (FALSE)
-                            sep = "",          # Separator of the columns of the file
+                            sep = "\n",          # Separator of the columns of the file
                             dec = ".")         # Character used to separate decimals of the numbers in the file
   output$string_data <- renderText({
     paste(reading_data) #functions 
   })
   
-  list_of_keywords_by_examiner <-read.table("examiner_list.txt",
+  list_of_keywords_by_examiner <-read.table("/Users/abdul/Desktop/Programming/R Programs/AutoEx/ml/data/examinerList.txt",
                              header= FALSE,
                              sep= "",
                              dec =".")
