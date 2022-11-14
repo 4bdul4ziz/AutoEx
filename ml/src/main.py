@@ -218,7 +218,7 @@ def main():
 
         for image in images:
             fnImg = os.path.join(fnWritten, image)
-            imageSeg(fnImg)
+            #imageSeg(fnImg)
             print(fnImg)
             recognized = image_to_text(fnImg)
             storeVisionText(recognized)
@@ -227,4 +227,5 @@ def main():
 
 if __name__ == '__main__':
     main()
+    print("Model ran successfully.")
 
