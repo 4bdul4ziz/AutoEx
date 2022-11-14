@@ -11,9 +11,8 @@ def getImages():
     #print(images)
     #run the python main.py --image <path> where <path> will be the images in the list
     for image in images:
-        
-        os.system("python main.py --image ml/data/segments/" + image)
-        print("python main.py --image data/segments/" + image)
+        os.system("python ml/src/main.py --image ml/data/segments/" + image)
+
 
 
 getImages()
