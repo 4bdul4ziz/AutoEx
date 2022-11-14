@@ -2,11 +2,11 @@
 #NLP output txt file
 import numpy as np
 
-NLP_file_output= "ml/test.txt"
+NLP_file_output= ""
 
 NLP_list = []
 
-with open('ml/test.txt','r') as file:  
+with open('/Users/abdul/Desktop/Programming/R Programs/AutoEx/ml/data/corrected.txt','r') as file:  
     for line in file:     
         for word in line.split():         
             NLP_list.append(word)
@@ -15,9 +15,10 @@ with open('ml/test.txt','r') as file:
 
 NLP_array = np.asarray(NLP_list)
 
+'''
 for i in range(0,len(NLP_array)):
     print(NLP_array[i])
-
+'''
 
 
 def normal_weightage(NLP_array):
@@ -41,7 +42,7 @@ def normal_weightage(NLP_array):
     
     print(keyword_weightage)
     #print(keyword_normal_matches)
-    print(matches_found_no_duplicates)
+    #print(matches_found_no_duplicates)
 
 
 #normal_weightage(NLP_array)
@@ -81,10 +82,10 @@ def custom_weightage(NLP_array):
                 
 
     custom_matches_found_no_duplicates = set(custom_matches_found)
-    print(custom_matches_found_no_duplicates)
+    #print(custom_matches_found_no_duplicates)
     print(weightage_score)
 
 
-custom_weightage(NLP_array)
+#custom_weightage(NLP_array)
 
 
