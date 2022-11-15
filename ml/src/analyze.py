@@ -34,6 +34,7 @@ def odds(val):
 def weightOfEvidence(origProb, margProb):
     return math.log2(odds(origProb)) - math.log2(odds(margProb))
 
+
 def showPixelRelevance():
     pixelRelevance = np.load(Constants.fnPixelRelevance)
     plt.imshow(pixelRelevance, interpolation='nearest')
@@ -41,8 +42,6 @@ def showPixelRelevance():
 
 def showTranslationInvariance():
     pixelProb = np.load(Constants.fnTranslationInvariance)
-
-    
 
 def analyzePixelRelevance():
     "simplified implementation of paper: Zintgraf et al - Visualizing Deep Neural Network Decisions: Prediction Difference Analysis"
