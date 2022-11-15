@@ -12,10 +12,15 @@ def spellChecker():
     #correct spelling
     corrected = blob.correct()
 
-    # write corrected text to a file
+    # write corrected text with one word on each line to a file
     with open("/Users/abdul/Desktop/Programming/R Programs/AutoEx/ml/data/corrected.txt", "w") as f:
-        f.write(str(corrected))
-    f.close()
+        for word in corrected.words:
+            f.write(word + " ");
+            f.close();
+
+
+        """  with open("/Users/abdul/Desktop/Programming/R Programs/AutoEx/ml/data/corrected.txt", "w") as f:
+        f.write(str(corrected)) """
     
 #spellChecker()
     
