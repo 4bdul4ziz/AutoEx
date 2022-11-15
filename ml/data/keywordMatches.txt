@@ -1,0 +1,3 @@
+{'analyzed', 'Abdul', 'Data'}
+{'Resting', 'Data', 'traffic'}
+{'Abdul', 'Data'}

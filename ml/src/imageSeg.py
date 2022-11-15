@@ -18,6 +18,15 @@ def imageSeg(image):
         cv2.waitKey(0)
         cv2.imwrite('/Users/abdul/Desktop/Programming/R Programs/AutoEx/ml/data/segments/word'+str(i)+'.png', roi)
 
+
+#imageSeg("/Users/abdul/Desktop/Programming/R Programs/AutoEx/ml/data/written/IMG_6043.jpg")
+
+
+
+
+
+
+
 """ #read the image
 #HMM YES INTERESTING IMAGE
 image = cv2.imread('/Users/abdul/Desktop/Programming/R Programs/AutoEx/ml/data/written/IMG_6024.jpg')

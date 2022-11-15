@@ -225,4 +225,4 @@ def main():
             spellChecker()
 
         print("Model ran successfully!")
-
+main()
