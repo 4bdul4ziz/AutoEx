@@ -224,8 +224,5 @@ def main():
             storeVisionText(recognized)
             spellChecker()
 
-
-if __name__ == '__main__':
-    main()
-    print("Model ran successfully.")
+        print("Model ran successfully!")
 
