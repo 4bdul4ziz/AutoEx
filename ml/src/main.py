@@ -122,10 +122,6 @@ def storeVisionText(recognized):
             f.write("%s\n" % item)
 
 
-
-
-        
-
 def main():
     "main function"
     # optional command line args

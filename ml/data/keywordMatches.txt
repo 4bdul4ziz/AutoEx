@@ -1,3 +1,3 @@
 {'analyzed', 'Abdul', 'Data'}
 {'Resting', 'Data', 'traffic'}
-{'Abdul', 'Data'}
+{'Abdul', 'Data'}{'peril', 'Abdul', 'handwritten'}set()set(){'Abdul', 'needs'}{'Abdul', 'Data'}{'handwritten', 'pencil'}{'Abdul', 'is'}{'handwritten'}{'Abdul', 'Data'}{'Abdul', 'Data'}{'Abdul', 'Data'}{'Abdul', 'Data'}set()set(){'SPARK', 'Data'}{'peril', 'data'}{'phone', 'one'}

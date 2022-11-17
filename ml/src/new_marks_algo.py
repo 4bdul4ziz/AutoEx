@@ -66,7 +66,7 @@ def custom_weightage(NLP_array):
     for i in range(0,n_keywords):
         keyword = input('Enter the keyword: ')
         with open('/Users/abdul/Desktop/Programming/R Programs/AutoEx/ml/data/examinerList.txt','a') as file:  
-            file.write(keyword)
+            file.write(keyword+'\n')
         keyword_list.append(keyword)
         keyword_weightage = int(input('Enter the weightage associated with the keyword: '))
         with open('/Users/abdul/Desktop/Programming/R Programs/AutoEx/ml/data/customWeights.txt','w') as file:  
