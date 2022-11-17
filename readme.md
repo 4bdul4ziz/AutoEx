@@ -27,7 +27,7 @@ To create the GUI, we used R Shiny. The GUI contains 3 tabs: Home, Upload and Re
 2. Run `pip install -r requirements.txt`
 3. Navigate to the ml/src directory and run `python main.py`
 4. Drop the image of the answer sheet in the ml/data/writings directory
-5. To run the GUI, navigate to the R directory and run `AutoEx_interface.R`
+5. To run the GUI, run `app.R`
 
 ## Usage
 1. The GUI will open up. Click on the "Browse" button to select the image of the answer sheet.
@@ -39,7 +39,7 @@ To create the GUI, we used R Shiny. The GUI contains 3 tabs: Home, Upload and Re
 This project is a part of the course project for the courses CSE4082, CSE3105 & CSE3505 at VIT University, Chennai.
 
 ## Contributors
-1. Abdul A. & R. 
+1. Abdul A.
 2. Samik S.
 
 
