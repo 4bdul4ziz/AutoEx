@@ -10,7 +10,7 @@ We use Apple's Vision Kit interfaced with Python using the objective c wrapper t
 The tool is built using Python and the GUI is built using R Shiny.
 
 ## Creating the dataset
-To create the IAM dataset, we used the IAM dataset available on the internet. The dataset contains images of handwritten text. The dataset is divided into 3 parts: train, test and validation. The train and validation set contains the images and the corresponding text. The test set contains only the images. The text for the test set is not available. We used the train and validation set to train the model and the test set to test the model.
+To create the IAM dataset, we used the words IAM dataset available on the internet. The dataset contains images of handwritten text. The dataset is divided into 3 parts: train, test and validation. The train and validation set contains the images and the corresponding text. The test set contains only the images. The text for the test set is not available. We used the train and validation set to train the model and the test set to test the model.
 
 ## Training the model
 To train the model, we used the train and validation set. The images are converted to grayscale and resized to 128x32. The text is converted to a sequence of integers. The model is trained using the Adam optimizer and the CTC loss function. The model is trained for 10 epochs. The model is saved after training.
@@ -21,7 +21,8 @@ To test the model, we used the test set. The images are converted to grayscale a
 ## Creating the GUI
 To create the GUI, we used R Shiny. The GUI contains 3 tabs: Home, Upload and Results. The Home tab contains the instructions to use the tool. The Upload tab contains the upload button to upload the image. The Results tab contains the results of the image uploaded.
 
-
+## Images of the GUI
+![Home tab](
 ## Installation
 1. Clone the repository
 2. Run `pip install -r requirements.txt`
@@ -36,7 +37,7 @@ To create the GUI, we used R Shiny. The GUI contains 3 tabs: Home, Upload and Re
 4. The score will be displayed on the screen. 
 5. The class average score will be displayed on the screen, alongside the score of the student.
 
-This project is a part of the course project for the courses CSE4082, CSE3105 & CSE3505 at VIT University, Chennai.
+This project is a part of the course project for the course CSE4082, at VIT University, Chennai.
 
 ## Contributors
 1. Abdul A.
