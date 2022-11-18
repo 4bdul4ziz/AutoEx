@@ -22,7 +22,8 @@ To test the model, we used the test set. The images are converted to grayscale a
 To create the GUI, we used R Shiny. The GUI contains 3 tabs: Home, Upload and Results. The Home tab contains the instructions to use the tool. The Upload tab contains the upload button to upload the image. The Results tab contains the results of the image uploaded.
 
 ## Images of the GUI
-![Home tab](
+![](media/1.png)
+
 ## Installation
 1. Clone the repository
 2. Run `pip install -r requirements.txt`
