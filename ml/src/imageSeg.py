@@ -17,9 +17,10 @@ def imageSeg(image):
         cv2.rectangle(image,(x,y),( x + w, y + h ),(90,0,255),2)
         cv2.waitKey(0)
         cv2.imwrite('/Users/abdul/Desktop/Programming/R Programs/AutoEx/ml/data/segments/word'+str(i)+'.png', roi)
+       #cv2.imshow('marked areas',image)
+        #cv2.waitKey(0)
 
-
-#imageSeg("/Users/abdul/Desktop/Programming/R Programs/AutoEx/ml/data/written/IMG_6043.jpg")
+#imageSeg("/Users/abdul/Desktop/Programming/R Programs/AutoEx/ml/data/written/IMG_5067.png")
 
 
 

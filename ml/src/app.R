@@ -73,8 +73,6 @@ ui <- fluidPage(theme = shinytheme("slate"),
       tags$hr(),
       actionButton("sd_plt","Generate Standard Deviation"),
       tags$hr(),
-      actionButton("distri_plt","Generate Distribution Plot"),
-      tags$hr(),
       actionButton("pie_plt","Generate Pie Plot"),
       tags$hr(),
       actionButton("lm_plt","Generate Linear Model")
@@ -185,7 +183,6 @@ server <- function(input, output) {
     standard_deviation_plot()
   })
   
-  
   #for pie plot on button press
   pie_plot <- eventReactive(input$pie_plt, {
     pie(gradeCount, labels = grade, col = rainbow(length(grade)))
@@ -208,8 +205,7 @@ server <- function(input, output) {
     lm_plot()
   })
   
-  
-  
+
 }
 
 shinyApp(ui = ui, server = server)

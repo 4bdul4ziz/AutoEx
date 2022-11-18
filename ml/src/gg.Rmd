@@ -1,0 +1,86 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+```{r}
+# read ml/data/judgement.csv and perform statistical analysis on them using ggplot
+
+# read the data
+data <- read.csv("/Users/abdul/Desktop/Programming/R Programs/AutoEx/ml/data/judgement.csv", header = TRUE, sep = ",")
+# check the data
+head(data)
+# check the data type
+str(data)
+```
+
+```{r}
+# check the distribution of the data
+library(ggplot2)
+ggplot(data, aes(x = marks)) +
+    geom_histogram(binwidth = 1, color = "black", fill = "white") +
+    labs(title = "Distribution of Judgement", x = "marks", y = "Students")
+
+# check the distribution of the data
+
+ggplot(data, aes(x = marks)) +
+    geom_histogram(binwidth = 1, color = "black", fill = "white") +
+    labs(title = "Distribution of Judgement", x = "marks", y = "Students") +
+    facet_wrap(~StudentID)+ theme_bw()
+
+```
+
+```{r}
+ggplot(data, aes(x = StudentID, y = marks)) +
+    geom_point() +
+    labs(title = "Judgement", x = "StudentID", y = "Marks")
+```
+
+```{r}
+
+# standard deviation plot the data
+ggplot(data, aes(x = StudentID, y = marks)) +
+    geom_point() +
+    geom_errorbar(aes(ymin = marks - sd(marks), ymax = marks + sd(marks)), width = 0.2) +
+    labs(title = "Judgement", x = "Students", y = "Marks")
+```
+
+```{r}
+# find class average
+
+classAvg <- aggregate(marks ~ StudentID, data, mean)
+classAvg
+```
+
+```{r}
+# find s grade cut off point
+
+sGrade <- quantile(classAvg$marks, 0.25)
+sGrade
+```
+
+```{r}
+#a grade
+aGrade <- quantile(classAvg$marks, 0.75)
+aGrade
+```
+
+```{r}
+grade <- c("S", "A", "B", "C", "D", "E")
+gradeCount <- c(sum(classAvg$marks > sGrade), sum(classAvg$marks > aGrade), sum(classAvg$marks > 60), sum(classAvg$marks > 50), sum(classAvg$marks > 40), sum(classAvg$marks > 30))
+
+# plot the pie chart
+
+pie(gradeCount, labels = grade, col = rainbow(length(grade)))
+```
+
+```{r}
+model <- lm(marks ~ StudentID, data)
+ggplot(data, aes(x = StudentID, y = marks)) +
+    geom_point() +
+    geom_smooth(method = "lm", se = TRUE) +
+    labs(title = "Judgement", x = "StudentID", y = "Marks")
+    
+```
+
+

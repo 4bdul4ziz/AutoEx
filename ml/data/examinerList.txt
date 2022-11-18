@@ -1,9 +1,8 @@
 Examiner List
-store
-hadoop
-SPARK
-Data
-peril
-data
-phone
-one
+
+handwritten
+Abdul
+Abdul
+handwritten
+handwritten
+Abdul
