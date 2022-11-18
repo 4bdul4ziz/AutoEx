@@ -1,3 +1,5 @@
+![](https://raw.githubusercontent.com/4bdul4ziz/Artificial-Conversation-Entity/main/assets/1.png)
+
 # Automated Examiner
 ## A tool to automate the process of correcting a handwritten answer sheet.
 
