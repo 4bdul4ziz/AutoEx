@@ -5,6 +5,7 @@ import argparse
 import re
 import os
 import cv2
+import time
 import editdistance
 import tensorflow as tf
 from DataLoader import DataLoader, Batch
@@ -82,9 +83,18 @@ def validate(model, loader):
         print('Batch:', iterInfo[0], '/', iterInfo[1])
         batch = loader.getNext()
         (recognized, _) = model.inferBatch(batch)
+        #calculate runtime for each batch
+        start = time.time()
+        print('Runtime:', time.time() - start)
+        #write it to a txt file
+        f = open("/Users/abdul/Desktop/Programming/R Programs/AutoEx/ml/data/runtime.txt", "a")
+        f.write(str(time.time() - start))
+        f.write("\n")
+        f.close()
 
         print('Ground truth -> Recognized')
         for i in range(len(recognized)):
+            
             numWordOK += 1 if batch.gtTexts[i] == recognized[i] else 0
             numWordTotal += 1
             dist = editdistance.eval(recognized[i], batch.gtTexts[i])
@@ -92,6 +102,7 @@ def validate(model, loader):
             numCharTotal += len(batch.gtTexts[i])
             print('[OK]' if dist == 0 else '[ERR:%d]' % dist, '"' + batch.gtTexts[i] + '"', '->',
                   '"' + recognized[i] + '"')
+
 
     # print validation result
     charErrorRate = numCharErr / numCharTotal
