@@ -56,7 +56,7 @@ To create the GUI, we used R Shiny. The GUI contains 3 tabs: Home, Upload and Re
 4. The score will be displayed on the screen. 
 5. The class average score will be displayed on the screen, alongside the score of the student.
 
-This project is a part of the course project for the course CSE4082, at VIT University, Chennai.
+This project is a part of the course project for the course Fundamentals of Data Analytics, at VIT University, Chennai.
 
 ## Contributors
 1. Abdul A.
